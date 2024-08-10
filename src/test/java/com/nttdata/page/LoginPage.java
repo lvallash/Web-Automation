@@ -5,8 +5,8 @@ import org.openqa.selenium.By;
 public class LoginPage {
 
     //Localizadores de elementos
-    public static By userInput = By.id("user-name");
-    public static By passInput = By.id("password");
-    public static By loginButton = By.id("login-button");
+    public static By userInput = By.xpath("//input[@name='email']");
+    public static By passInput = By.xpath("//input[@name='password']");
+    public static By loginButton = By.xpath("//button[contains(text(), 'SIGN IN')]");
 
 }

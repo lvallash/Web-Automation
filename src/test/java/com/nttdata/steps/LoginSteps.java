@@ -1,6 +1,7 @@
 package com.nttdata.steps;
 
 import com.nttdata.page.LoginPage;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -8,43 +9,51 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-
 public class LoginSteps {
 
     private WebDriver driver;
 
-    //constructor
+    // Constructor
     public LoginSteps(WebDriver driver){
         this.driver = driver;
     }
 
-    /**
-     * Escribir el usuario
-     * @param user el usuario
-     */
     public void typeUser(String user){
-        WebElement userInputElement = driver.findElement(LoginPage.userInput);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        WebElement userInputElement = wait.until(ExpectedConditions.presenceOfElementLocated(LoginPage.userInput));
         userInputElement.sendKeys(user);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(444));
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(40));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(LoginPage.loginButton));
-
-
     }
 
-    /**
-     * Escribir el password
-     * @param password el password del usuario
-     */
     public void typePassword(String password){
-        this.driver.findElement(LoginPage.passInput).sendKeys(password);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        WebElement passInputElement = wait.until(ExpectedConditions.presenceOfElementLocated(LoginPage.passInput));
+        passInputElement.sendKeys(password);
     }
 
-    /**
-     * Hacer click en el botón login
-     */
     public void login(){
-        this.driver.findElement(LoginPage.loginButton).click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        WebElement loginButtonElement = wait.until(ExpectedConditions.elementToBeClickable(By.className("btn")));
+        loginButtonElement.click();
     }
+
+    public void loginAndVerify(String user, String password) {
+        typeUser(user);
+        typePassword(password);
+        login();
+
+        // Agrega una pausa para permitir que la página se cargue completamente
+        try {
+            Thread.sleep(5000); // 5 segundos
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // Verifica el título
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        WebElement titleElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@class='title']")));
+        System.out.println("Title: " + titleElement.getText());
+    }
+
+
 
 }
