@@ -24,6 +24,7 @@ public class DriverManager {
 
         driver = new ChromeDriver();
         driver.manage().window().maximize();
+        driver.get("https://qalab.bensg.com/store/");
     }
     @Before(order = 1)
     public void setScenario(Scenario scenario){

@@ -1,8 +1,15 @@
-Feature: Login
+#language: es
+@testfeature
+Característica: Product - Store
 
   @test
-  Scenario: Iniciar sesión en la tienda
-    Given que me encuentro en la página de login de la tienda en línea
-    When inicio sesión con las credenciales usuario: "lvallash@gmail.com" y contraseña: "Michul2703*"
-    Then valido que debería aparecer el título de "Home"
-    And también valido que al menos exista un item
+    Escenario: Validar el precio del producto en el carrito
+    Dado estoy en la página de la tienda
+    Y me logueo con mi usuario "lvallash@gmail.com" y clave "Michul2703*"
+    Cuando navego a la categoría "Clothes" y subcategoría "Men"
+    Y agrego 2 unidades del primer producto al carrito
+    Entonces valido en el popup la confirmación del producto agregado
+    Y valido en el popup que el monto total sea calculado correctamente
+    Cuando finalizo la compra
+    Entonces valido el título de la página del carrito
+    Y vuelvo a validar el cálculo de precios en el carrito
